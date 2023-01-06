@@ -6,16 +6,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList cars = setListCar();
-
-        System.out.println(cars);
-        cars.remove(0);
-        cars.remove(0);
-        System.out.println(cars);
-
-    }
-
-    public static ArrayList setListCar(){
         ArrayList<String> cars = new ArrayList<>();
         cars.add("BMW M1");
         cars.add("BMW M2");
@@ -27,7 +17,16 @@ public class Main {
         cars.add("BMW M8");
         cars.add("BMW I4");
         cars.add("BMW I8");
-        return cars;
+
+
+        System.out.println(cars);
+
+        cars.remove(0);
+        cars.remove(0);
+        cars.remove(cars.size() - 1);
+
+        System.out.println(cars);
+
     }
 
 }
