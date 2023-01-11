@@ -5,7 +5,8 @@ import java.util.*;
 
 public class Group {
     private String groupName;
-    private List<Student> students = new ArrayList<>(10);
+    private final int FINAL_INT = 10;
+    private List<Student> students = new ArrayList<>(FINAL_INT);
 
     public  Group(String groupName, List<Student> students){
         super();
@@ -35,11 +36,17 @@ public class Group {
         this.students = students;
     }
 
-    public void addStudent(Student student) {
-       students.add(student);
+    public void addStudent(Student student) throws GroupOverflowException {
+        if(!(studentInGroup(student))) {
+            if (students.size() < FINAL_INT) {
+                students.add(student);
+                return;
+            }
+            throw new GroupOverflowException();
+        }
     }
 
-    public Student searchStudentByLastName(String lastName) throws StudentNotFoundException{
+    public Student  searchStudentByLastName(String lastName) throws StudentNotFoundException{
         for(int i = 0; i < students.size(); i++){
             if(students.get(i) != null){
                 if(students.get(i).getLastName().equals(lastName)){
@@ -62,7 +69,7 @@ public class Group {
         return  false;
     }
 
-    public void SortStudentsByLastName(){
+    public void sortStudentsByLastName(){
         students.sort(Comparator.nullsLast(new SortStudentsByLastName()));
     }
 
@@ -72,6 +79,16 @@ public class Group {
         if (!(o instanceof Group)) return false;
         Group group = (Group) o;
         return Objects.equals(groupName, group.groupName) && Objects.equals(students, group.students);
+    }
+
+    public boolean studentInGroup(Student student){
+        for(Student std : students){
+            if(std != null && std.equals(student)){
+                System.out.println("Student = " + student.getName() + "." + student.getLastName() + ", Already added to the group!");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
